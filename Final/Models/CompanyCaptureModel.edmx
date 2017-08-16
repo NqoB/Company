@@ -1,0 +1,488 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CompanyCaptureDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BusinessSector_tbl">
+          <Key>
+            <PropertyRef Name="businessSectorID" />
+          </Key>
+          <Property Name="businessSectorID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="businessSectorDesc" Type="varchar" MaxLength="255" />
+          <Property Name="updateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CompanyName_tbl">
+          <Key>
+            <PropertyRef Name="companyID" />
+          </Key>
+          <Property Name="companyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="companyName" Type="varchar" MaxLength="255" />
+          <Property Name="shortCode" Type="varchar" MaxLength="50" />
+          <Property Name="corpInfo" Type="varchar" MaxLength="255" />
+          <Property Name="updateDate" Type="datetime" />
+          <Property Name="countryID" Type="int" />
+          <Property Name="exchangeCodeID" Type="varchar" MaxLength="50" />
+          <Property Name="companyTypeID" Type="int" />
+          <Property Name="businessSectorID" Type="int" />
+        </EntityType>
+        <EntityType Name="CompanyType_tbl">
+          <Key>
+            <PropertyRef Name="companyTypeID" />
+          </Key>
+          <Property Name="companyTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="companyTypeDesc" Type="varchar" MaxLength="255" />
+          <Property Name="updateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Country_tbl">
+          <Key>
+            <PropertyRef Name="countryID" />
+          </Key>
+          <Property Name="countryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="countryName" Type="varchar" MaxLength="255" />
+          <Property Name="countryCode" Type="varchar" MaxLength="50" />
+          <Property Name="currenctDesc" Type="varchar" MaxLength="255" />
+          <Property Name="updateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CountryCompanyName_tbl">
+          <Key>
+            <PropertyRef Name="countryID" />
+            <PropertyRef Name="companyID" />
+          </Key>
+          <Property Name="countryID" Type="int" Nullable="false" />
+          <Property Name="companyID" Type="int" Nullable="false" />
+          <Property Name="companyName" Type="varchar" MaxLength="255" />
+          <Property Name="countryName" Type="varchar" MaxLength="255" />
+          <Property Name="updateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Exchange_tbl">
+          <Key>
+            <PropertyRef Name="exchangeCodeID" />
+          </Key>
+          <Property Name="exchangeCodeID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="exchangeName" Type="varchar" MaxLength="255" />
+          <Property Name="updateDate" Type="datetime" />
+          <Property Name="countryID" Type="int" />
+        </EntityType>
+        <EntityType Name="User_tbl">
+          <Key>
+            <PropertyRef Name="employeeNo" />
+          </Key>
+          <Property Name="employeeNo" Type="int" Nullable="false" />
+          <Property Name="password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__CompanyNa__busin__1BFD2C07">
+          <End Role="BusinessSector_tbl" Type="Self.BusinessSector_tbl" Multiplicity="0..1" />
+          <End Role="CompanyName_tbl" Type="Self.CompanyName_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusinessSector_tbl">
+              <PropertyRef Name="businessSectorID" />
+            </Principal>
+            <Dependent Role="CompanyName_tbl">
+              <PropertyRef Name="businessSectorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CompanyNa__compa__1B0907CE">
+          <End Role="CompanyType_tbl" Type="Self.CompanyType_tbl" Multiplicity="0..1" />
+          <End Role="CompanyName_tbl" Type="Self.CompanyName_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyType_tbl">
+              <PropertyRef Name="companyTypeID" />
+            </Principal>
+            <Dependent Role="CompanyName_tbl">
+              <PropertyRef Name="companyTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CompanyNa__excha__1A14E395">
+          <End Role="Exchange_tbl" Type="Self.Exchange_tbl" Multiplicity="0..1" />
+          <End Role="CompanyName_tbl" Type="Self.CompanyName_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exchange_tbl">
+              <PropertyRef Name="exchangeCodeID" />
+            </Principal>
+            <Dependent Role="CompanyName_tbl">
+              <PropertyRef Name="exchangeCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CountryCo__compa__20C1E124">
+          <End Role="CompanyName_tbl" Type="Self.CompanyName_tbl" Multiplicity="1" />
+          <End Role="CountryCompanyName_tbl" Type="Self.CountryCompanyName_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyName_tbl">
+              <PropertyRef Name="companyID" />
+            </Principal>
+            <Dependent Role="CountryCompanyName_tbl">
+              <PropertyRef Name="companyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CountryCo__count__1FCDBCEB">
+          <End Role="Country_tbl" Type="Self.Country_tbl" Multiplicity="1" />
+          <End Role="CountryCompanyName_tbl" Type="Self.CountryCompanyName_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country_tbl">
+              <PropertyRef Name="countryID" />
+            </Principal>
+            <Dependent Role="CountryCompanyName_tbl">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Exchange___count__164452B1">
+          <End Role="Country_tbl" Type="Self.Country_tbl" Multiplicity="0..1" />
+          <End Role="Exchange_tbl" Type="Self.Exchange_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country_tbl">
+              <PropertyRef Name="countryID" />
+            </Principal>
+            <Dependent Role="Exchange_tbl">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="SearchCompany" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="companyName" Type="nvarchar" Mode="In" />
+        </Function>
+        <EntityContainer Name="CompanyCaptureDBModelStoreContainer">
+          <EntitySet Name="BusinessSector_tbl" EntityType="Self.BusinessSector_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyName_tbl" EntityType="Self.CompanyName_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CompanyType_tbl" EntityType="Self.CompanyType_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Country_tbl" EntityType="Self.Country_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CountryCompanyName_tbl" EntityType="Self.CountryCompanyName_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Exchange_tbl" EntityType="Self.Exchange_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="User_tbl" EntityType="Self.User_tbl" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CompanyNa__busin__1BFD2C07" Association="Self.FK__CompanyNa__busin__1BFD2C07">
+            <End Role="BusinessSector_tbl" EntitySet="BusinessSector_tbl" />
+            <End Role="CompanyName_tbl" EntitySet="CompanyName_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CompanyNa__compa__1B0907CE" Association="Self.FK__CompanyNa__compa__1B0907CE">
+            <End Role="CompanyType_tbl" EntitySet="CompanyType_tbl" />
+            <End Role="CompanyName_tbl" EntitySet="CompanyName_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CompanyNa__excha__1A14E395" Association="Self.FK__CompanyNa__excha__1A14E395">
+            <End Role="Exchange_tbl" EntitySet="Exchange_tbl" />
+            <End Role="CompanyName_tbl" EntitySet="CompanyName_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CountryCo__compa__20C1E124" Association="Self.FK__CountryCo__compa__20C1E124">
+            <End Role="CompanyName_tbl" EntitySet="CompanyName_tbl" />
+            <End Role="CountryCompanyName_tbl" EntitySet="CountryCompanyName_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CountryCo__count__1FCDBCEB" Association="Self.FK__CountryCo__count__1FCDBCEB">
+            <End Role="Country_tbl" EntitySet="Country_tbl" />
+            <End Role="CountryCompanyName_tbl" EntitySet="CountryCompanyName_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Exchange___count__164452B1" Association="Self.FK__Exchange___count__164452B1">
+            <End Role="Country_tbl" EntitySet="Country_tbl" />
+            <End Role="Exchange_tbl" EntitySet="Exchange_tbl" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CompanyCaptureDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="BusinessSector_tbl">
+          <Key>
+            <PropertyRef Name="businessSectorID" />
+          </Key>
+          <Property Name="businessSectorID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="businessSectorDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CompanyName_tbl" Relationship="Self.FK__CompanyNa__busin__1BFD2C07" FromRole="BusinessSector_tbl" ToRole="CompanyName_tbl" />
+        </EntityType>
+        <EntityType Name="CompanyName_tbl">
+          <Key>
+            <PropertyRef Name="companyID" />
+          </Key>
+          <Property Name="companyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="companyName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="shortCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="corpInfo" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <Property Name="countryID" Type="Int32" />
+          <Property Name="exchangeCodeID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="companyTypeID" Type="Int32" />
+          <Property Name="businessSectorID" Type="Int32" />
+          <NavigationProperty Name="BusinessSector_tbl" Relationship="Self.FK__CompanyNa__busin__1BFD2C07" FromRole="CompanyName_tbl" ToRole="BusinessSector_tbl" />
+          <NavigationProperty Name="CompanyType_tbl" Relationship="Self.FK__CompanyNa__compa__1B0907CE" FromRole="CompanyName_tbl" ToRole="CompanyType_tbl" />
+          <NavigationProperty Name="Exchange_tbl" Relationship="Self.FK__CompanyNa__excha__1A14E395" FromRole="CompanyName_tbl" ToRole="Exchange_tbl" />
+          <NavigationProperty Name="CountryCompanyName_tbl" Relationship="Self.FK__CountryCo__compa__20C1E124" FromRole="CompanyName_tbl" ToRole="CountryCompanyName_tbl" />
+        </EntityType>
+        <EntityType Name="CompanyType_tbl">
+          <Key>
+            <PropertyRef Name="companyTypeID" />
+          </Key>
+          <Property Name="companyTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="companyTypeDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CompanyName_tbl" Relationship="Self.FK__CompanyNa__compa__1B0907CE" FromRole="CompanyType_tbl" ToRole="CompanyName_tbl" />
+        </EntityType>
+        <EntityType Name="Country_tbl">
+          <Key>
+            <PropertyRef Name="countryID" />
+          </Key>
+          <Property Name="countryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="countryName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="countryCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="currenctDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CountryCompanyName_tbl" Relationship="Self.FK__CountryCo__count__1FCDBCEB" FromRole="Country_tbl" ToRole="CountryCompanyName_tbl" />
+          <NavigationProperty Name="Exchange_tbl" Relationship="Self.FK__Exchange___count__164452B1" FromRole="Country_tbl" ToRole="Exchange_tbl" />
+        </EntityType>
+        <EntityType Name="CountryCompanyName_tbl">
+          <Key>
+            <PropertyRef Name="countryID" />
+            <PropertyRef Name="companyID" />
+          </Key>
+          <Property Name="countryID" Type="Int32" Nullable="false" />
+          <Property Name="companyID" Type="Int32" Nullable="false" />
+          <Property Name="companyName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="countryName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CompanyName_tbl" Relationship="Self.FK__CountryCo__compa__20C1E124" FromRole="CountryCompanyName_tbl" ToRole="CompanyName_tbl" />
+          <NavigationProperty Name="Country_tbl" Relationship="Self.FK__CountryCo__count__1FCDBCEB" FromRole="CountryCompanyName_tbl" ToRole="Country_tbl" />
+        </EntityType>
+        <EntityType Name="Exchange_tbl">
+          <Key>
+            <PropertyRef Name="exchangeCodeID" />
+          </Key>
+          <Property Name="exchangeCodeID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="exchangeName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <Property Name="countryID" Type="Int32" />
+          <NavigationProperty Name="CompanyName_tbl" Relationship="Self.FK__CompanyNa__excha__1A14E395" FromRole="Exchange_tbl" ToRole="CompanyName_tbl" />
+          <NavigationProperty Name="Country_tbl" Relationship="Self.FK__Exchange___count__164452B1" FromRole="Exchange_tbl" ToRole="Country_tbl" />
+        </EntityType>
+        <EntityType Name="User_tbl">
+          <Key>
+            <PropertyRef Name="employeeNo" />
+          </Key>
+          <Property Name="employeeNo" Type="Int32" Nullable="false" />
+          <Property Name="password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <Association Name="FK__CompanyNa__busin__1BFD2C07">
+          <End Role="BusinessSector_tbl" Type="Self.BusinessSector_tbl" Multiplicity="0..1" />
+          <End Role="CompanyName_tbl" Type="Self.CompanyName_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="BusinessSector_tbl">
+              <PropertyRef Name="businessSectorID" />
+            </Principal>
+            <Dependent Role="CompanyName_tbl">
+              <PropertyRef Name="businessSectorID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CompanyNa__compa__1B0907CE">
+          <End Role="CompanyType_tbl" Type="Self.CompanyType_tbl" Multiplicity="0..1" />
+          <End Role="CompanyName_tbl" Type="Self.CompanyName_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyType_tbl">
+              <PropertyRef Name="companyTypeID" />
+            </Principal>
+            <Dependent Role="CompanyName_tbl">
+              <PropertyRef Name="companyTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CompanyNa__excha__1A14E395">
+          <End Role="Exchange_tbl" Type="Self.Exchange_tbl" Multiplicity="0..1" />
+          <End Role="CompanyName_tbl" Type="Self.CompanyName_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Exchange_tbl">
+              <PropertyRef Name="exchangeCodeID" />
+            </Principal>
+            <Dependent Role="CompanyName_tbl">
+              <PropertyRef Name="exchangeCodeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CountryCo__compa__20C1E124">
+          <End Role="CompanyName_tbl" Type="Self.CompanyName_tbl" Multiplicity="1" />
+          <End Role="CountryCompanyName_tbl" Type="Self.CountryCompanyName_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyName_tbl">
+              <PropertyRef Name="companyID" />
+            </Principal>
+            <Dependent Role="CountryCompanyName_tbl">
+              <PropertyRef Name="companyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CountryCo__count__1FCDBCEB">
+          <End Role="Country_tbl" Type="Self.Country_tbl" Multiplicity="1" />
+          <End Role="CountryCompanyName_tbl" Type="Self.CountryCompanyName_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country_tbl">
+              <PropertyRef Name="countryID" />
+            </Principal>
+            <Dependent Role="CountryCompanyName_tbl">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Exchange___count__164452B1">
+          <End Role="Country_tbl" Type="Self.Country_tbl" Multiplicity="0..1" />
+          <End Role="Exchange_tbl" Type="Self.Exchange_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country_tbl">
+              <PropertyRef Name="countryID" />
+            </Principal>
+            <Dependent Role="Exchange_tbl">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CompanyCaptureDBEntities2" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="BusinessSector_tbl" EntityType="Self.BusinessSector_tbl" />
+          <EntitySet Name="CompanyName_tbl" EntityType="Self.CompanyName_tbl" />
+          <EntitySet Name="CompanyType_tbl" EntityType="Self.CompanyType_tbl" />
+          <EntitySet Name="Country_tbl" EntityType="Self.Country_tbl" />
+          <EntitySet Name="CountryCompanyName_tbl" EntityType="Self.CountryCompanyName_tbl" />
+          <EntitySet Name="Exchange_tbl" EntityType="Self.Exchange_tbl" />
+          <EntitySet Name="User_tbl" EntityType="Self.User_tbl" />
+          <AssociationSet Name="FK__CompanyNa__busin__1BFD2C07" Association="Self.FK__CompanyNa__busin__1BFD2C07">
+            <End Role="BusinessSector_tbl" EntitySet="BusinessSector_tbl" />
+            <End Role="CompanyName_tbl" EntitySet="CompanyName_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CompanyNa__compa__1B0907CE" Association="Self.FK__CompanyNa__compa__1B0907CE">
+            <End Role="CompanyType_tbl" EntitySet="CompanyType_tbl" />
+            <End Role="CompanyName_tbl" EntitySet="CompanyName_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CompanyNa__excha__1A14E395" Association="Self.FK__CompanyNa__excha__1A14E395">
+            <End Role="Exchange_tbl" EntitySet="Exchange_tbl" />
+            <End Role="CompanyName_tbl" EntitySet="CompanyName_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CountryCo__compa__20C1E124" Association="Self.FK__CountryCo__compa__20C1E124">
+            <End Role="CompanyName_tbl" EntitySet="CompanyName_tbl" />
+            <End Role="CountryCompanyName_tbl" EntitySet="CountryCompanyName_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CountryCo__count__1FCDBCEB" Association="Self.FK__CountryCo__count__1FCDBCEB">
+            <End Role="Country_tbl" EntitySet="Country_tbl" />
+            <End Role="CountryCompanyName_tbl" EntitySet="CountryCompanyName_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Exchange___count__164452B1" Association="Self.FK__Exchange___count__164452B1">
+            <End Role="Country_tbl" EntitySet="Country_tbl" />
+            <End Role="Exchange_tbl" EntitySet="Exchange_tbl" />
+          </AssociationSet>
+          <FunctionImport Name="SearchCompany" ReturnType="Collection(CompanyCaptureDBModel.SearchCompany_Result)">
+            <Parameter Name="companyName" Mode="In" Type="String" />
+          </FunctionImport>
+        </EntityContainer>
+        <ComplexType Name="SearchCompany_Result">
+          <Property Type="String" Name="companyName" Nullable="true" MaxLength="255" />
+          <Property Type="String" Name="exchangeName" Nullable="true" MaxLength="255" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CompanyCaptureDBModelStoreContainer" CdmEntityContainer="CompanyCaptureDBEntities2">
+          <EntitySetMapping Name="BusinessSector_tbl">
+            <EntityTypeMapping TypeName="CompanyCaptureDBModel.BusinessSector_tbl">
+              <MappingFragment StoreEntitySet="BusinessSector_tbl">
+                <ScalarProperty Name="businessSectorID" ColumnName="businessSectorID" />
+                <ScalarProperty Name="businessSectorDesc" ColumnName="businessSectorDesc" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyName_tbl">
+            <EntityTypeMapping TypeName="CompanyCaptureDBModel.CompanyName_tbl">
+              <MappingFragment StoreEntitySet="CompanyName_tbl">
+                <ScalarProperty Name="companyID" ColumnName="companyID" />
+                <ScalarProperty Name="companyName" ColumnName="companyName" />
+                <ScalarProperty Name="shortCode" ColumnName="shortCode" />
+                <ScalarProperty Name="corpInfo" ColumnName="corpInfo" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="countryID" ColumnName="countryID" />
+                <ScalarProperty Name="exchangeCodeID" ColumnName="exchangeCodeID" />
+                <ScalarProperty Name="companyTypeID" ColumnName="companyTypeID" />
+                <ScalarProperty Name="businessSectorID" ColumnName="businessSectorID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CompanyType_tbl">
+            <EntityTypeMapping TypeName="CompanyCaptureDBModel.CompanyType_tbl">
+              <MappingFragment StoreEntitySet="CompanyType_tbl">
+                <ScalarProperty Name="companyTypeID" ColumnName="companyTypeID" />
+                <ScalarProperty Name="companyTypeDesc" ColumnName="companyTypeDesc" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Country_tbl">
+            <EntityTypeMapping TypeName="CompanyCaptureDBModel.Country_tbl">
+              <MappingFragment StoreEntitySet="Country_tbl">
+                <ScalarProperty Name="countryID" ColumnName="countryID" />
+                <ScalarProperty Name="countryName" ColumnName="countryName" />
+                <ScalarProperty Name="countryCode" ColumnName="countryCode" />
+                <ScalarProperty Name="currenctDesc" ColumnName="currenctDesc" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CountryCompanyName_tbl">
+            <EntityTypeMapping TypeName="CompanyCaptureDBModel.CountryCompanyName_tbl">
+              <MappingFragment StoreEntitySet="CountryCompanyName_tbl">
+                <ScalarProperty Name="countryID" ColumnName="countryID" />
+                <ScalarProperty Name="companyID" ColumnName="companyID" />
+                <ScalarProperty Name="companyName" ColumnName="companyName" />
+                <ScalarProperty Name="countryName" ColumnName="countryName" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Exchange_tbl">
+            <EntityTypeMapping TypeName="CompanyCaptureDBModel.Exchange_tbl">
+              <MappingFragment StoreEntitySet="Exchange_tbl">
+                <ScalarProperty Name="exchangeCodeID" ColumnName="exchangeCodeID" />
+                <ScalarProperty Name="exchangeName" ColumnName="exchangeName" />
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="countryID" ColumnName="countryID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="User_tbl">
+            <EntityTypeMapping TypeName="CompanyCaptureDBModel.User_tbl">
+              <MappingFragment StoreEntitySet="User_tbl">
+                <ScalarProperty Name="employeeNo" ColumnName="employeeNo" />
+                <ScalarProperty Name="password" ColumnName="password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="SearchCompany" FunctionName="CompanyCaptureDBModel.Store.SearchCompany">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="CompanyCaptureDBModel.SearchCompany_Result">
+                <ScalarProperty Name="companyName" ColumnName="companyName" />
+                <ScalarProperty Name="exchangeName" ColumnName="exchangeName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

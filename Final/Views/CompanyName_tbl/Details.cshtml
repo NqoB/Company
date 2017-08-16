@@ -1,0 +1,82 @@
+﻿@model Final.Models.CompanyName_tbl
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CompanyName_tbl</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.companyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.companyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.shortCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.shortCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.corpInfo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.corpInfo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.updateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.updateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.countryID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.countryID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BusinessSector_tbl.businessSectorDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BusinessSector_tbl.businessSectorDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyType_tbl.companyTypeDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyType_tbl.companyTypeDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Exchange_tbl.exchangeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Exchange_tbl.exchangeName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.companyID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+@{
+    ViewBag.Title = "View";
+}
+
+<html>
+<head>
+    <style>
+        fieldset {
+            padding: 1em;
+            font: 100%/1 Arial;
+            /*border:2px solid green;*/
+            border: 2px solid grey;
+        }
+    </style>
+</head>
+
+
+<body>
+    <br />
+    @*<a href="#" class="btn btn-primary btn-lg btn-block" style="background-color:#010431;width:400px">Company Name</a>*@
+    @*<br />*@
+    @*<label for="label" class="col-lg-10 col-lg-offset-5" style="">Company Name Search</label>*@
+    <br />
+    <br />
+    <form class="form-horizontal" style="background-color:lightgray">
+        <fieldset>
+            <legend>
+
+                <a href="#" class="btn btn-primary btn-lg btn-block col-md-3" style="background-color:#010431;">Company Name Search</a>
+            </legend>
+            <br />
+            <br />
+            <div class="form-group">
+                <label for="label" class="col-sm-2 control-label">Exchange</label>
+                <div class="col-sm-8">
+                    <select class="form-control">
+                        <option class="JSE JSE STOCK EXCHANGE">JSE JSE STOCK EXCHANGE</option>
+                        <option class="BW-BOTSWANA STOCK EXCHANGE">BW-BOTSWANA STOCK EXCHANGE</option>
+                        <option class="KE-NAIROBI SECURITIES EXCHANGE">KE-NAIROBI SECURITIES EXCHANGE</option>
+                        <option class="MU-MAURITIUS STOCK EXCHANGE">MU-MAURITIUS STOCK EXCHANGE</option>
+                        <option class="NG-NIGERIAN EXCHANGE">NG-NIGERIAN EXCHANGE</option>
+                        <option class="PRIVATE COMPANIES">PRIVATE COMPANIES</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="label" class="col-sm-2 control-label">Type of Company</label>
+                <div class="col-sm-8">
+                    <select class="form-control">
+                        <option class="Listed">Listed</option>
+                        <option class="Delisted">Delisted</option>
+                        <option class="Private">Private</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="label" class="col-sm-2 control-label">Search By</label>
+                <div class="col-sm-8">
+                    <select class="form-control">
+                        <option class="Company Name">Company Name</option>
+                        <option class="Business Sector">Business Sector</option>
+                        <option class="Country">Country</option>
+                    </select>
+                </div>
+            </div>
+            <div class="form-inline form-group ">
+                <label for="label" class="col-sm-2 control-label">Enter Search</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" id="enterSearch">&nbsp;&nbsp;<button type="submit" class="btn btn-default">Search</button>
+                </div>
+            </div>
+            <br />
+            <br />
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-lg-offset-2">
+                        <div class="well">
+                            <table class="table">
+                                &nbsp;
+                                &nbsp;
+                                <tbody>
+
+                                    <tr>
+                                        <td>ANGLO AMERICAN AGGREGATES(HUZHOU) LTD</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ANGLO AMERICAN NORTE SA</td>
+                                    </tr>
+                                    <tr>
+                                        <td>ANGLO AMERICAN PLC</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <br />
+            <div class="form-inline form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <button class="btn btn-default" type="button" id="Delete" style="width:100px; height:34px;" onclick="location.href='@Url.Action("Add","Function")'">Add</button>
+                    <button class="btn btn-default" type="button" id="Delete" style="width:100px; height:34px;" onclick="location.href='@Url.Action("Add","Function")'">Change</button>
+                    <button class="btn btn-default" type="button" id="Delete" style="width:100px; height:34px;" onclick="location.href='@Url.Action("Add","Function")'">Delete</button>
+
+                    <button class="btn btn-default" type="button" id="Delete" style="width:100px; height:34px;float:right;" onclick="window.print();">Print Screen</button>
+                </div>
+
+            </div>
+            <br />
+</fieldset>
+</form>
+</body>
+</html>

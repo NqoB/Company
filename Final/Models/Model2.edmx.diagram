@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c04bf7a3d3d44bd0843ffbb1cf3acc7d" Name="Diagram1">
+        <EntityTypeShape EntityType="IressModel.BusinessSector" Width="1.5" PointX="2.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IressModel.CompanyName" Width="1.5" PointX="5.625" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IressModel.CompanyType" Width="1.5" PointX="8.125" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IressModel.Country" Width="1.5" PointX="5.625" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IressModel.Exchange" Width="1.5" PointX="1.875" PointY="3.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IressModel.user" Width="1.5" PointX="0.5" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="IressModel.CountryCompName" Width="1.75" PointX="8.625" PointY="3.25" IsExpanded="true" />
+        <AssociationConnector Association="IressModel.FK__CompanyNa__Busin__1CF15040" ManuallyRouted="false" />
+        <AssociationConnector Association="IressModel.FK__CompanyNa__Compa__1DE57479" ManuallyRouted="false" />
+        <AssociationConnector Association="IressModel.FK__CompanyNa__Excha__1B0907CE" ManuallyRouted="false" />
+        <AssociationConnector Association="IressModel.FK__CountryCo__Compa__1A14E395" ManuallyRouted="false" />
+        <AssociationConnector Association="IressModel.FK__CountryCo__Count__1920BF5C" ManuallyRouted="false" />
+        <AssociationConnector Association="IressModel.FK__Exchange__Countr__1ED998B2" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

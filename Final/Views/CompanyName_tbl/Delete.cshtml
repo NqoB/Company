@@ -1,0 +1,88 @@
+﻿@model Final.Models.CompanyName_tbl
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>CompanyName_tbl</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.companyName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.companyName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.shortCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.shortCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.corpInfo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.corpInfo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.updateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.updateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.countryID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.countryID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BusinessSector_tbl.businessSectorDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BusinessSector_tbl.businessSectorDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CompanyType_tbl.companyTypeDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CompanyType_tbl.companyTypeDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Exchange_tbl.exchangeName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Exchange_tbl.exchangeName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
