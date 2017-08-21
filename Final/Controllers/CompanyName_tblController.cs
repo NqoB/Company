@@ -17,7 +17,7 @@ namespace Final.Controllers
         // GET: CompanyName_tbl
 
         [HttpGet]
-        public ActionResult Index(string Search_Data, string exchangeCodeID, string companyTypeID,string companyNameList,string exchangeCodeName)
+        public ActionResult Index(string Search_Data, string exchangeCodeID, string companyTypeID,string companyNameList,string exchangeCodeName, int? countryID)
         {
 
             var exchange = db.Exchange_tbl
@@ -29,33 +29,45 @@ namespace Final.Controllers
             ViewBag.exchangeCodeID = new SelectList(db.Exchange_tbl, "exchangeCodeID", "exchangeName");
             ViewBag.companyTypeID = new SelectList(db.CompanyType_tbl, "companyTypeID", "companyTypeDesc");
 
+            //Country_tbl rvm = new Country_tbl();
+
+            //Country_tbl Report = db.Country_tbl.Find(countryID);
+            //List<Country_tbl> tablesinreport = new List<Country_tbl>();
+
+
+            //IQueryable<Country_tbl> ReportTables = from t1 in db.CountryCompanyName_tbl
+            //                                       join t2 in db.Country_tbl on t1.companyID equals t2.countryID
+            //                                       where t1.countryID == countryID
+            //                                       select t2;
+            //tablesinreport = ReportTables.ToList();
+
+            
+            ViewBag.country = new SelectList(db.Country_tbl, "countryID", "countryName");
 
             var companyList = new List<String> { "Company Name", "Business Sector", "Country" };
             ViewBag.companyNameList = new SelectList(companyList);
 
             var companyName1 = from s in db.CompanyName_tbl
-                                select s;
-
+                               //join c in db.Country_tbl on s.countryID equals c.countryID
+                               //where s.countryID == countryID
+                               select s;
+           
 
             if (!String.IsNullOrEmpty(Search_Data))
             {
-                if (companyNameList == "Company Name")
+                if (companyNameList == "Company Name"|| companyNameList==null)
                 {
                     companyName1 = companyName1.Where(s => s.companyName.Contains(Search_Data));
                 }
-                else if (companyNameList == "Business Sector")
+                else if (companyNameList == "Business Sector" || companyNameList == null)
                 {
                     companyName1 = companyName1.Where(s => s.BusinessSector_tbl.businessSectorDesc.Contains(Search_Data));
                 }
-                else if (companyNameList == "Country")
+                else 
                 {
                     companyName1 = companyName1.Where(s => s.countryID.ToString().Contains(Search_Data));
                 }
-                else
-                {
-                   
-
-                }
+     
             }
 
             if (!String.IsNullOrEmpty(exchangeCodeID))
@@ -67,8 +79,53 @@ namespace Final.Controllers
                 companyName1 = companyName1.Where(s => s.companyTypeID.ToString() == companyTypeID);
             }
 
-            return View(companyName1.ToList());
 
+
+
+        return View(companyName1.ToList());
+
+        }
+
+
+        public ActionResult Search(string searchBy, string list)
+        {
+
+            var ola = new object[] { "Exchange", "Business Sector", "Country", "Company Name" };
+            ViewBag.list = new SelectList(ola);
+
+            ViewBag.companyNameID = new SelectList(db.CompanyName_tbl, "companyID", "companyName");
+            ViewBag.businessSectorID = new SelectList(db.BusinessSector_tbl, "businessSectorID", "businessSectorDesc");
+            ViewBag.companyTypeID = new SelectList(db.CompanyType_tbl, "companyTypeID", "companyTypeDesc");
+            ViewBag.exchangeCodeID = new SelectList(db.Exchange_tbl, "exchangeCodeID", "exchangeName");
+
+            var comName = from g in db.CompanyName_tbl
+                          select g;
+
+            if (!String.IsNullOrEmpty(searchBy))
+            {
+
+                if (list.Equals("Company Name"))
+                {
+
+                    comName = comName.Where(s => s.companyName.Contains(searchBy));
+                }
+
+                else if (list.Equals("Exchange"))
+                {
+
+                    comName = comName.Where(s => s.exchangeCodeID.Contains(searchBy));
+                }
+
+                else if (list.Equals("Business Sector"))
+                {
+                    comName = comName.Where(s => s.BusinessSector_tbl.businessSectorDesc.Contains(searchBy));
+                }
+                else 
+                {
+                    comName = comName.Where(s => s.countryID.ToString().Contains(searchBy));
+                }
+            }   
+            return View(comName.ToList());
         }
         // GET: CompanyName_tbl/Details/5
         public ActionResult Details(int? id)

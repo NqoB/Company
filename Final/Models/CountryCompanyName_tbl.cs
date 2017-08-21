@@ -14,8 +14,8 @@ namespace Final.Models
     
     public partial class CountryCompanyName_tbl
     {
-        public int countryID { get; set; }
-        public int companyID { get; set; }
+        public Nullable<int> countryID { get; set; }
+        public Nullable<int> companyID { get; set; }
         public string companyName { get; set; }
         public string countryName { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }

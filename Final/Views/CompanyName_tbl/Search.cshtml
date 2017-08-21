@@ -1,0 +1,240 @@
+﻿@model IEnumerable<Final.Models.CompanyName_tbl>
+@{
+    ViewBag.Title = "Search";
+}
+
+
+<html>
+<head>
+    <style>
+        fieldset {
+            padding: 1em;
+            font: 100%/1 Arial;
+            /*border:2px solid green;*/
+            border: 2px solid grey;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js">
+    </script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $("tr[id=popover]").popover({ placement: "top", trigger: "hover" });
+        });
+
+    </script>
+
+
+</head>
+
+
+<body>
+
+
+    <br />
+    <br />
+    <br />
+    <div class="row">
+        <div class="col-md-7">
+
+        </div>
+    </div>
+
+    <form class="form-horizontal" style="background-color:lightgray">
+
+
+        <div class="row">
+            <div class="col-md-12 col-md-offset-0">
+                <fieldset>
+                    <legend>
+                        <a href="#" class="btn btn-primary btn-lg btn-block" style="background-color:#010431;">Search</a>
+                    </legend>
+                    @using (Html.BeginForm())
+                    {
+                        <div class="form-inline form-group">
+                            <div class="col-md-8 col-md-offset-0">
+                                <label for="label" class="col-sm-1 col-sm-offset-0 control-label">Type</label>
+                                <div class="col-md-12 col-md-offset-2">
+                                    <div class="form-group">
+
+                                        <div class="col-md-12 ">
+                                            @Html.DropDownList("list",null, new { @class = "form-control" })
+                                        </div>    
+                                    </div>&nbsp;&nbsp;<button type="submit" class="btn btn-default">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="col-md-8 col-md-offset-0">
+                                <label for="label" class="col-sm-1 col-sm-offset-0 control-label">Name</label>
+                                <div class="col-md-12 col-md-offset-2">
+                                    @Html.TextBox("searchBy",null, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+
+                        <div class="container">
+                            <div class="col-md-10 col-md-offset-1">
+                                <div id="myPopoverContent">
+                                    <table class="table table-hover">
+
+                                        @if (Model.Count() > 0)
+                                        {
+
+                                            foreach (var item in Model)
+                                            {
+                                                <tr id="popover" title="Company Information" data-html="true" data-content="Short Code: @Html.DisplayFor(modelItem => item.shortCode)<br/>
+                                                           Exchange: @Html.DisplayFor(modelItem => item.Exchange_tbl.exchangeName)<br/>
+                                                           Company Type: @Html.DisplayFor(modelItem => item.CompanyType_tbl.companyTypeDesc)<br/>
+                                                           Business Sector: @Html.DisplayFor(modelItem => item.BusinessSector_tbl.businessSectorDesc)<br/>
+                                                           Country: @Html.DisplayFor(modelItem => item.countryID )<br/> ">
+                                                 <td>
+                                                        @Html.DisplayFor(modelItem => item.companyName) &nbsp;@Html.DisplayFor(modelItem => item.Exchange_tbl.exchangeCodeID)
+                                                </td>
+                                             </tr>
+                                            }
+                                        }
+                                        else
+                                        {
+
+                                            <tr>
+                                                <td align="center"><b>No Records found</b></td>
+
+                                            </tr>
+
+                                        }
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                    }
+                    <div class="form-inline form-group">
+                        <div class="col-md-10 col-md-offset-2">
+                            <button class="btn btn-default" type="button" id="addBtn" style="width:100px; height:34px;" onclick="location.href='@Url.Action("addBtn", "Create")'">Add</button>
+                            <button class="btn btn-default" type="button" id="changeBtn" style="width:100px; height:34px;" onclick="location.href='@Url.Action("Edit", "CompanyName_tbl")'">Change</button>
+                            <button class="btn btn-default" type="button" id="deleteBtn" style="width:100px; height:34px;" onclick="location.href='@Html.Action("Delete", "CompanyName_tbl")'">Delete</button>
+                        </div>
+
+                    </div>
+
+                </fieldset>
+
+            </div>
+
+            @*<div class="col-md-7">
+                <fieldset>
+                    <legend>
+                        <a href="#" class="btn btn-primary btn-lg btn-block" style="background-color:#010431;">Company Name</a>
+                    </legend>
+
+                    <div class="container">
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="Exchange" class="col-md-3 control-label">Exchange</label>
+
+                                <div class="col-md-3">
+                                    <input type="text" class="form-control" id="ExchangeCode" placeholder="JSE">
+                                </div>
+                                <div class="col-md-5">
+                                    <input type="text" class="form-control" id="ExchangeName" placeholder="JSE JSE STOCK EXCHANGE" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="Company Name" class="col-md-3 control-label">Company Name</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="ExchangeCode">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="ShortCode" class="col-md-3 control-label">Short Code (Ordinary)</label>
+                                <div class="col-md-2">
+                                    <input type="text" class="form-control" id="ExchangeCode" placeholder="BAW">
+                                </div>
+                                <label for="CompType" class="col-md-3 control-label">Company Type</label>
+                                <div class="col-md-4">
+                                    <select class="form-control" style="width:80%">
+                                        <option class="Listed">Listed</option>
+                                        <option class="Delisted">Delisted</option>
+                                        <option class="Private">Private</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="Country" class="col-md-3 control-label">Country</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="Country">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <label for="BusinessSector" class="col-md-3 control-label">Business Sector</label>
+                                <div class="col-md-8">
+                                    <input type="text" class="form-control" id="BusinessSector">
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <br /><br /> <br /><br /><br /><br />  <br /><br /><br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <div class="form-inline form-group">
+                        <div class="col-lg-10 col-lg-offset-3">
+                            <button class="btn btn-default" type="submit" id="updateBtn" style="width:100px; height:34px;" onclick="location.href='@Url.Action("Add", "Function")'">Update</button>
+                            <button class="btn btn-default" type="submit" id="exitBtn" style="width:100px; height:34px;" onClick="alert('Are you sure you want to exit?');location.href='@Url.Action("Login", "Home")'">Exit</button>
+                            <button class="btn btn-default" type="submit" id="printBtn" style="width:100px; height:34px;" onclick="window.print();">Print Screen</button>
+                        </div>*@
+
+            @*</div>
+
+                    </fieldset>
+                </div>*@
+
+        </div>
+
+
+    </form>
+
+</body>
+</html>
+
+
+
+
+
+
