@@ -51,11 +51,11 @@ namespace Final.Controllers
                                //join c in db.Country_tbl on s.countryID equals c.countryID
                                //where s.countryID == countryID
                                select s;
-           
+
 
             if (!String.IsNullOrEmpty(Search_Data))
             {
-                if (companyNameList == "Company Name"|| companyNameList==null)
+                if (companyNameList == "Company Name" || companyNameList == null)
                 {
                     companyName1 = companyName1.Where(s => s.companyName.Contains(Search_Data));
                 }
@@ -63,11 +63,14 @@ namespace Final.Controllers
                 {
                     companyName1 = companyName1.Where(s => s.BusinessSector_tbl.businessSectorDesc.Contains(Search_Data));
                 }
-                else 
+                else
                 {
-                    companyName1 = companyName1.Where(s => s.countryID.ToString().Contains(Search_Data));
+                    var countries = db.Country_tbl.ToList();
+                    List<int> countryIds = countries.Where(x => x.countryName.ToLower().Contains(Search_Data.ToLower())).Select(x => x.countryID).ToList();
+                    List<int> companyIds = db.countrycompviews.Where(x => countryIds.Contains(x.countryID)).Select(x => x.companyID).ToList();
+                    companyName1 = companyName1.Where(s => companyIds.Contains(s.companyID));
                 }
-     
+
             }
 
             if (!String.IsNullOrEmpty(exchangeCodeID))

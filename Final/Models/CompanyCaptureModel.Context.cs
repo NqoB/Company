@@ -31,9 +31,10 @@ namespace Final.Models
         public virtual DbSet<CompanyName_tbl> CompanyName_tbl { get; set; }
         public virtual DbSet<CompanyType_tbl> CompanyType_tbl { get; set; }
         public virtual DbSet<Country_tbl> Country_tbl { get; set; }
-        public virtual DbSet<CountryCompanyName_tbl> CountryCompanyName_tbl { get; set; }
         public virtual DbSet<Exchange_tbl> Exchange_tbl { get; set; }
         public virtual DbSet<User_tbl> User_tbl { get; set; }
+        public virtual DbSet<CountryCompanyName_tbl> CountryCompanyName_tbl { get; set; }
+        public virtual DbSet<countrycompview> countrycompviews { get; set; }
     
         public virtual ObjectResult<SearchCompany_Result> SearchCompany(string companyName)
         {

@@ -204,6 +204,9 @@
     <Compile Include="Models\CountryCompanyName_tbl.cs">
       <DependentUpon>CompanyCaptureModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\countrycompview.cs">
+      <DependentUpon>CompanyCaptureModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Country_tbl.cs">
       <DependentUpon>CompanyCaptureModel.tt</DependentUpon>
     </Compile>

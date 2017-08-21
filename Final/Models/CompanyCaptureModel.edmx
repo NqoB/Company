@@ -47,13 +47,11 @@
         </EntityType>
         <EntityType Name="CountryCompanyName_tbl">
           <Key>
-            <PropertyRef Name="countryID" />
-            <PropertyRef Name="companyID" />
+            <PropertyRef Name="ID" />
           </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="countryID" Type="int" Nullable="false" />
           <Property Name="companyID" Type="int" Nullable="false" />
-          <Property Name="companyName" Type="varchar" MaxLength="255" />
-          <Property Name="countryName" Type="varchar" MaxLength="255" />
           <Property Name="updateDate" Type="datetime" />
         </EntityType>
         <EntityType Name="Exchange_tbl">
@@ -71,6 +69,20 @@
           </Key>
           <Property Name="employeeNo" Type="int" Nullable="false" />
           <Property Name="password" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'CompanyCaptureDB.dbo.countrycompview' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="countrycompview">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="countryID" />
+            <PropertyRef Name="companyID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="countryID" Type="int" Nullable="false" />
+          <Property Name="companyID" Type="int" Nullable="false" />
+          <Property Name="countryName" Type="varchar" MaxLength="255" />
+          <Property Name="companyName" Type="varchar" MaxLength="255" />
         </EntityType>
         <Association Name="FK__CompanyNa__busin__1BFD2C07">
           <End Role="BusinessSector_tbl" Type="Self.BusinessSector_tbl" Multiplicity="0..1" />
@@ -155,6 +167,15 @@
           <EntitySet Name="CountryCompanyName_tbl" EntityType="Self.CountryCompanyName_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Exchange_tbl" EntityType="Self.Exchange_tbl" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User_tbl" EntityType="Self.User_tbl" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="countrycompview" EntityType="Self.countrycompview" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [countrycompview].[ID] AS [ID], 
+    [countrycompview].[countryID] AS [countryID], 
+    [countrycompview].[companyID] AS [companyID], 
+    [countrycompview].[countryName] AS [countryName], 
+    [countrycompview].[companyName] AS [companyName]
+    FROM [dbo].[countrycompview] AS [countrycompview]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__CompanyNa__busin__1BFD2C07" Association="Self.FK__CompanyNa__busin__1BFD2C07">
             <End Role="BusinessSector_tbl" EntitySet="BusinessSector_tbl" />
             <End Role="CompanyName_tbl" EntitySet="CompanyName_tbl" />
@@ -209,7 +230,7 @@
           <NavigationProperty Name="BusinessSector_tbl" Relationship="Self.FK__CompanyNa__busin__1BFD2C07" FromRole="CompanyName_tbl" ToRole="BusinessSector_tbl" />
           <NavigationProperty Name="CompanyType_tbl" Relationship="Self.FK__CompanyNa__compa__1B0907CE" FromRole="CompanyName_tbl" ToRole="CompanyType_tbl" />
           <NavigationProperty Name="Exchange_tbl" Relationship="Self.FK__CompanyNa__excha__1A14E395" FromRole="CompanyName_tbl" ToRole="Exchange_tbl" />
-          <NavigationProperty Name="CountryCompanyName_tbl" Relationship="Self.FK__CountryCo__compa__20C1E124" FromRole="CompanyName_tbl" ToRole="CountryCompanyName_tbl" />
+          <NavigationProperty Name="CountryCompanyName_tbl" Relationship="CompanyCaptureDBModel.FK__CountryCo__compa__20C1E124" FromRole="CompanyName_tbl" ToRole="CountryCompanyName_tbl" />
         </EntityType>
         <EntityType Name="CompanyType_tbl">
           <Key>
@@ -229,21 +250,8 @@
           <Property Name="countryCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="currenctDesc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="updateDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CountryCompanyName_tbl" Relationship="Self.FK__CountryCo__count__1FCDBCEB" FromRole="Country_tbl" ToRole="CountryCompanyName_tbl" />
           <NavigationProperty Name="Exchange_tbl" Relationship="Self.FK__Exchange___count__164452B1" FromRole="Country_tbl" ToRole="Exchange_tbl" />
-        </EntityType>
-        <EntityType Name="CountryCompanyName_tbl">
-          <Key>
-            <PropertyRef Name="countryID" />
-            <PropertyRef Name="companyID" />
-          </Key>
-          <Property Name="countryID" Type="Int32" Nullable="false" />
-          <Property Name="companyID" Type="Int32" Nullable="false" />
-          <Property Name="companyName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="countryName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="updateDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="CompanyName_tbl" Relationship="Self.FK__CountryCo__compa__20C1E124" FromRole="CountryCompanyName_tbl" ToRole="CompanyName_tbl" />
-          <NavigationProperty Name="Country_tbl" Relationship="Self.FK__CountryCo__count__1FCDBCEB" FromRole="CountryCompanyName_tbl" ToRole="Country_tbl" />
+          <NavigationProperty Name="CountryCompanyName_tbl" Relationship="CompanyCaptureDBModel.FK__CountryCo__count__1FCDBCEB" FromRole="Country_tbl" ToRole="CountryCompanyName_tbl" />
         </EntityType>
         <EntityType Name="Exchange_tbl">
           <Key>
@@ -299,30 +307,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK__CountryCo__compa__20C1E124">
-          <End Role="CompanyName_tbl" Type="Self.CompanyName_tbl" Multiplicity="1" />
-          <End Role="CountryCompanyName_tbl" Type="Self.CountryCompanyName_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="CompanyName_tbl">
-              <PropertyRef Name="companyID" />
-            </Principal>
-            <Dependent Role="CountryCompanyName_tbl">
-              <PropertyRef Name="companyID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK__CountryCo__count__1FCDBCEB">
-          <End Role="Country_tbl" Type="Self.Country_tbl" Multiplicity="1" />
-          <End Role="CountryCompanyName_tbl" Type="Self.CountryCompanyName_tbl" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Country_tbl">
-              <PropertyRef Name="countryID" />
-            </Principal>
-            <Dependent Role="CountryCompanyName_tbl">
-              <PropertyRef Name="countryID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK__Exchange___count__164452B1">
           <End Role="Country_tbl" Type="Self.Country_tbl" Multiplicity="0..1" />
           <End Role="Exchange_tbl" Type="Self.Exchange_tbl" Multiplicity="*" />
@@ -340,7 +324,6 @@
           <EntitySet Name="CompanyName_tbl" EntityType="Self.CompanyName_tbl" />
           <EntitySet Name="CompanyType_tbl" EntityType="Self.CompanyType_tbl" />
           <EntitySet Name="Country_tbl" EntityType="Self.Country_tbl" />
-          <EntitySet Name="CountryCompanyName_tbl" EntityType="Self.CountryCompanyName_tbl" />
           <EntitySet Name="Exchange_tbl" EntityType="Self.Exchange_tbl" />
           <EntitySet Name="User_tbl" EntityType="Self.User_tbl" />
           <AssociationSet Name="FK__CompanyNa__busin__1BFD2C07" Association="Self.FK__CompanyNa__busin__1BFD2C07">
@@ -355,26 +338,75 @@
             <End Role="Exchange_tbl" EntitySet="Exchange_tbl" />
             <End Role="CompanyName_tbl" EntitySet="CompanyName_tbl" />
           </AssociationSet>
-          <AssociationSet Name="FK__CountryCo__compa__20C1E124" Association="Self.FK__CountryCo__compa__20C1E124">
-            <End Role="CompanyName_tbl" EntitySet="CompanyName_tbl" />
-            <End Role="CountryCompanyName_tbl" EntitySet="CountryCompanyName_tbl" />
-          </AssociationSet>
-          <AssociationSet Name="FK__CountryCo__count__1FCDBCEB" Association="Self.FK__CountryCo__count__1FCDBCEB">
-            <End Role="Country_tbl" EntitySet="Country_tbl" />
-            <End Role="CountryCompanyName_tbl" EntitySet="CountryCompanyName_tbl" />
-          </AssociationSet>
           <AssociationSet Name="FK__Exchange___count__164452B1" Association="Self.FK__Exchange___count__164452B1">
             <End Role="Country_tbl" EntitySet="Country_tbl" />
             <End Role="Exchange_tbl" EntitySet="Exchange_tbl" />
           </AssociationSet>
           <FunctionImport Name="SearchCompany" ReturnType="Collection(CompanyCaptureDBModel.SearchCompany_Result)">
-            <Parameter Name="companyName" Mode="In" Type="String" />
+          <Parameter Name="companyName" Mode="In" Type="String" />
           </FunctionImport>
+          <EntitySet Name="CountryCompanyName_tbl" EntityType="CompanyCaptureDBModel.CountryCompanyName_tbl" />
+          <AssociationSet Name="FK__CountryCo__compa__20C1E124" Association="CompanyCaptureDBModel.FK__CountryCo__compa__20C1E124">
+            <End Role="CompanyName_tbl" EntitySet="CompanyName_tbl" />
+            <End Role="CountryCompanyName_tbl" EntitySet="CountryCompanyName_tbl" />
+          </AssociationSet>
+          <AssociationSet Name="FK__CountryCo__count__1FCDBCEB" Association="CompanyCaptureDBModel.FK__CountryCo__count__1FCDBCEB">
+            <End Role="Country_tbl" EntitySet="Country_tbl" />
+            <End Role="CountryCompanyName_tbl" EntitySet="CountryCompanyName_tbl" />
+          </AssociationSet>
+          <EntitySet Name="countrycompviews" EntityType="CompanyCaptureDBModel.countrycompview" />
         </EntityContainer>
         <ComplexType Name="SearchCompany_Result">
           <Property Type="String" Name="companyName" Nullable="true" MaxLength="255" />
           <Property Type="String" Name="exchangeName" Nullable="true" MaxLength="255" />
         </ComplexType>
+        <EntityType Name="CountryCompanyName_tbl">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="countryID" Type="Int32" Nullable="false" />
+          <Property Name="companyID" Type="Int32" Nullable="false" />
+          <Property Name="updateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CompanyName_tbl" Relationship="CompanyCaptureDBModel.FK__CountryCo__compa__20C1E124" FromRole="CountryCompanyName_tbl" ToRole="CompanyName_tbl" />
+          <NavigationProperty Name="Country_tbl" Relationship="CompanyCaptureDBModel.FK__CountryCo__count__1FCDBCEB" FromRole="CountryCompanyName_tbl" ToRole="Country_tbl" />
+        </EntityType>
+        <Association Name="FK__CountryCo__compa__20C1E124">
+          <End Type="CompanyCaptureDBModel.CompanyName_tbl" Role="CompanyName_tbl" Multiplicity="1" />
+          <End Type="CompanyCaptureDBModel.CountryCompanyName_tbl" Role="CountryCompanyName_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CompanyName_tbl">
+              <PropertyRef Name="companyID" />
+            </Principal>
+            <Dependent Role="CountryCompanyName_tbl">
+              <PropertyRef Name="companyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__CountryCo__count__1FCDBCEB">
+          <End Type="CompanyCaptureDBModel.Country_tbl" Role="Country_tbl" Multiplicity="1" />
+          <End Type="CompanyCaptureDBModel.CountryCompanyName_tbl" Role="CountryCompanyName_tbl" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Country_tbl">
+              <PropertyRef Name="countryID" />
+            </Principal>
+            <Dependent Role="CountryCompanyName_tbl">
+              <PropertyRef Name="countryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="countrycompview">
+          <Key>
+            <PropertyRef Name="ID" />
+            <PropertyRef Name="countryID" />
+            <PropertyRef Name="companyID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="countryID" Type="Int32" Nullable="false" />
+          <Property Name="companyID" Type="Int32" Nullable="false" />
+          <Property Name="countryName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="companyName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -425,17 +457,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="CountryCompanyName_tbl">
-            <EntityTypeMapping TypeName="CompanyCaptureDBModel.CountryCompanyName_tbl">
-              <MappingFragment StoreEntitySet="CountryCompanyName_tbl">
-                <ScalarProperty Name="countryID" ColumnName="countryID" />
-                <ScalarProperty Name="companyID" ColumnName="companyID" />
-                <ScalarProperty Name="companyName" ColumnName="companyName" />
-                <ScalarProperty Name="countryName" ColumnName="countryName" />
-                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Exchange_tbl">
             <EntityTypeMapping TypeName="CompanyCaptureDBModel.Exchange_tbl">
               <MappingFragment StoreEntitySet="Exchange_tbl">
@@ -462,6 +483,27 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
+          <EntitySetMapping Name="CountryCompanyName_tbl">
+            <EntityTypeMapping TypeName="CompanyCaptureDBModel.CountryCompanyName_tbl">
+              <MappingFragment StoreEntitySet="CountryCompanyName_tbl">
+                <ScalarProperty Name="updateDate" ColumnName="updateDate" />
+                <ScalarProperty Name="companyID" ColumnName="companyID" />
+                <ScalarProperty Name="countryID" ColumnName="countryID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="countrycompviews">
+            <EntityTypeMapping TypeName="CompanyCaptureDBModel.countrycompview">
+              <MappingFragment StoreEntitySet="countrycompview">
+                <ScalarProperty Name="companyName" ColumnName="companyName" />
+                <ScalarProperty Name="countryName" ColumnName="countryName" />
+                <ScalarProperty Name="companyID" ColumnName="companyID" />
+                <ScalarProperty Name="countryID" ColumnName="countryID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

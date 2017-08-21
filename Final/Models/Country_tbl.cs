@@ -17,9 +17,8 @@ namespace Final.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Country_tbl()
         {
-            this.CountryCompanyName_tbl = new HashSet<CountryCompanyName_tbl>();
-            
             this.Exchange_tbl = new HashSet<Exchange_tbl>();
+            this.CountryCompanyName_tbl = new HashSet<CountryCompanyName_tbl>();
         }
     
         public int countryID { get; set; }
@@ -29,8 +28,8 @@ namespace Final.Models
         public Nullable<System.DateTime> updateDate { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<CountryCompanyName_tbl> CountryCompanyName_tbl { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Exchange_tbl> Exchange_tbl { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<CountryCompanyName_tbl> CountryCompanyName_tbl { get; set; }
     }
 }

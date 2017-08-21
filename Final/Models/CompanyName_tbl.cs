@@ -11,10 +11,7 @@ namespace Final.Models
 {
     using System;
     using System.Collections.Generic;
-
-
- 
-
+    
     public partial class CompanyName_tbl
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
@@ -27,12 +24,12 @@ namespace Final.Models
         public string companyName { get; set; }
         public string shortCode { get; set; }
         public string corpInfo { get; set; }
-        public string companyNameList { get; set; }
         public Nullable<System.DateTime> updateDate { get; set; }
         public Nullable<int> countryID { get; set; }
         public string exchangeCodeID { get; set; }
         public Nullable<int> companyTypeID { get; set; }
         public Nullable<int> businessSectorID { get; set; }
+    
         public virtual BusinessSector_tbl BusinessSector_tbl { get; set; }
         public virtual CompanyType_tbl CompanyType_tbl { get; set; }
         public virtual Exchange_tbl Exchange_tbl { get; set; }
